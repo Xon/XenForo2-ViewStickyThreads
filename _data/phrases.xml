@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="permission.forum_viewStaff" version_id="2000070" version_string="2.0.0"><![CDATA[View threads by staff]]></phrase>
+  <phrase title="permission.forum_viewStickies" version_id="2000070" version_string="2.0.0"><![CDATA[View sticky threads]]></phrase>
+</phrases>

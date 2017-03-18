@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="forum" permission_id="viewStaff" permission_type="flag" interface_group_id="forumPermissions" display_order="0"/>
+  <permission permission_group_id="forum" permission_id="viewStickies" permission_type="flag" interface_group_id="forumPermissions" display_order="0"/>
+</permissions>
