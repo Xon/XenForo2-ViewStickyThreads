@@ -1,0 +1,9 @@
+{
+    "title": "View Sticky Threads",
+    "version_string": "2.0.0",
+    "version_id": 2000070,
+    "dev" : "Xon",
+    "require" : {
+        "php": ["5.4.0", "PHP 5.4.0+"]
+    }
+}
