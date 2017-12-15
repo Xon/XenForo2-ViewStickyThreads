@@ -1,8 +1,0 @@
-{
-    "src/addons/SV/ViewStickyThreads/addon.json": "a6d4e4440571a19903183e58430141b3fec8a7c8461acfa4a934a28aea55f38d",
-    "src/addons/SV/ViewStickyThreads/XF/Entity/Thread.php": "097bb37418d3a8d489c4df0dfb118d1626ff53b3b461f8e924f36e104f4b0170",
-    "src/addons/SV/ViewStickyThreads/XF/Finder/Thread.php": "4e87fa6f198e964aa52847c0ec8ec02aea932c0f2a6a08393108f187eeab6fe9",
-    "src/addons/SV/ViewStickyThreads/_data/class_extensions.xml": "42063bbe9a48fe2add223bf0804afdf19120f7664f34ce280528a85ca4e91053",
-    "src/addons/SV/ViewStickyThreads/_data/permissions.xml": "2f0c5a0290e7a1ec5eac8ea101ffeb09641de42890285eefd6f564058d7f86e9",
-    "src/addons/SV/ViewStickyThreads/_data/phrases.xml": "ace493321c26ffd706fccede1b90a8fc5afe7826be4e51beca9edf30d60f0755"
-}
