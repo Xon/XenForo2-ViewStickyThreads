@@ -4,9 +4,9 @@ namespace SV\ViewStickyThreads\XF\Finder;
 
 class Thread extends XFCP_Thread
 {
-    public function applyVisibilityChecksInForum(\XF\Entity\Forum $forum)
+    public function applyVisibilityChecksInForum(\XF\Entity\Forum $forum, $allowOwnPending = false)
     {
-        $return = parent::applyVisibilityChecksInForum($forum);
+        $return = parent::applyVisibilityChecksInForum($forum, $allowOwnPending);
         $visitor = \XF::visitor();
 
         if ($visitor->hasNodePermission($forum->node_id, 'viewOthers') || !$visitor->hasNodePermission($forum->node_id, 'viewStickies'))
