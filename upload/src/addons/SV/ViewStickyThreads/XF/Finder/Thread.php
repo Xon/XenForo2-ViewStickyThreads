@@ -6,12 +6,13 @@ class Thread extends XFCP_Thread
 {
     public function applyVisibilityChecksInForum(\XF\Entity\Forum $forum, $allowOwnPending = false)
     {
-        $return = parent::applyVisibilityChecksInForum($forum, $allowOwnPending);
+        /** @var Thread $finder */
+        $finder = parent::applyVisibilityChecksInForum($forum, $allowOwnPending);
         $visitor = \XF::visitor();
 
         if ($visitor->hasNodePermission($forum->node_id, 'viewOthers') || !$visitor->hasNodePermission($forum->node_id, 'viewStickies'))
         {
-            return $return;
+            return $finder;
         }
 /*
 // view delete + moderated
@@ -39,23 +40,28 @@ array:3 [?
   2 => "`xf_thread`.`user_id` = 1"
 ]
 */
+        // map the columns to SQL encoded names.
+        $stickyCol = $finder->columnSqlName('sticky');
+        $userIdCol = $finder->columnSqlName('user_id');
+        $discussionStateCol = $finder->columnSqlName('discussion_state');
+
         // We edit the "`xf_thread`.`user_id` = 1" statement, as this is what enforces the lack of viewOthers permission
-        foreach($return->conditions as $key => $condition)
+        foreach($finder->conditions as $key => $condition)
         {
-            if (strpos($condition, '`xf_thread`.`user_id`') !== false &&
-                strpos($condition, '`xf_thread`.`discussion_state` = \'moderated\' AND `xf_thread`.`user_id` = ') === false)
+            if (strpos($condition, $userIdCol) !== false &&
+                strpos($condition, "{$discussionStateCol} = 'moderated' AND {$userIdCol} = ") === false)
             {
                 $parts = [];
-                $parts[] = '`xf_thread`.`sticky` = 1';
+                $parts[] = "{$stickyCol} = 1";
 
                 if ($parts)
                 {
-                    $return->conditions[$key] = "({$condition} OR (`xf_thread`.`discussion_state` = 'visible' AND (". implode(' OR ', $parts) .')))';
+                    $finder->conditions[$key] = "({$condition} OR ({$discussionStateCol} = 'visible' AND (". implode(' OR ', $parts) .')))';
                 }
                 break;
             }
         }
 
-        return $return;
+        return $finder;
     }
 }
