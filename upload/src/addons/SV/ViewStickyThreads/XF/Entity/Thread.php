@@ -16,17 +16,33 @@ class Thread extends XFCP_Thread
         $visitor = \XF::visitor();
         $nodeId = $this->node_id;
 
-        // ensure the forum/node can actually be seen
-        if ($visitor->hasNodePermission($nodeId, 'view') || $this->discussion_state != 'visible')
+        if (!$visitor->hasNodePermission($nodeId, 'viewStickies') || !$this->sticky)
         {
             return false;
         }
 
-        if ($visitor->hasNodePermission($nodeId, 'viewStickies') && $this->sticky)
+        // replicated from parent::canView
+        if (!$this->Forum || !$this->Forum->canView())
         {
-            return true;
+            return false;
         }
 
-        return false;
+        if (!$visitor->hasNodePermission($nodeId, 'view'))
+        {
+            return false;
+        }
+
+        if (!$visitor->hasNodePermission($nodeId, 'viewContent'))
+        {
+            return false;
+        }
+
+        if ($this->discussion_state !== 'visible')
+        {
+            return false;
+        }
+
+        $error = null;
+        return true;
     }
 }
