@@ -33,6 +33,12 @@ array:3 [?
   1 => "(`xf_thread`.`discussion_state` = 'moderated' AND `xf_thread`.`user_id` = 1) OR (`xf_thread`.`discussion_state` IN ('visible'))"
   2 => "`xf_thread`.`user_id` = 1"
 ]
+// view visible (guest)
+array:3 [?
+  0 => "`xf_thread`.`node_id` = 2"
+  1 => "(`xf_thread`.`discussion_state` IN ('visible'))"
+  2 => "1=0"
+]
 // view my moderated + deleted
 array:3 [?
   0 => "`xf_thread`.`node_id` = 2"
@@ -44,12 +50,18 @@ array:3 [?
         $stickyCol = $finder->columnSqlName('sticky');
         $userIdCol = $finder->columnSqlName('user_id');
         $discussionStateCol = $finder->columnSqlName('discussion_state');
+        $moderatedCondition = "{$discussionStateCol} = 'moderated' AND {$userIdCol} = ";
+        $isGuest = !$visitor->user_id;
 
-        // We edit the "`xf_thread`.`user_id` = 1" statement, as this is what enforces the lack of viewOthers permission
+        // We edit the "`xf_thread`.`user_id` = 1" statement, or for guests rewrite 1=0 as this is what enforces the lack of viewOthers permission
         foreach($finder->conditions as $key => $condition)
         {
-            if (strpos($condition, $userIdCol) !== false &&
-                strpos($condition, "{$discussionStateCol} = 'moderated' AND {$userIdCol} = ") === false)
+            if ($isGuest && $condition === "1=0")
+            {
+                $finder->conditions[$key] = "{$stickyCol} = 1";
+            }
+            else if (strpos($condition, $userIdCol) !== false &&
+                    strpos($condition, $moderatedCondition) === false)
             {
                 $parts = [];
                 $parts[] = "{$stickyCol} = 1";
