@@ -1,9 +1,9 @@
 {
     "legacy_addon_id": "SVViewStaffThreads",
     "title": "View Sticky Threads",
-    "description": "",
-    "version_string": "2.0.4",
-    "version_id": 2000400,
+    "description": "Allows Stickies to be visible in a forum without \"View threads by others\"",
+    "version_string": "2.0.5",
+    "version_id": 2000500,
     "dev" : "Xon",
     "dev_url": "https://atelieraphelion.com/",
     "faq_url": "",
