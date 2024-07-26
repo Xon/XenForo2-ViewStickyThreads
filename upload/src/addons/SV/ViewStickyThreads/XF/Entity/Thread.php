@@ -2,8 +2,15 @@
 
 namespace SV\ViewStickyThreads\XF\Entity;
 
+use XF\Phrase;
+
 class Thread extends XFCP_Thread
 {
+    /**
+     * @param Phrase|string|null $error
+     * @return bool
+     * @noinspection PhpMissingReturnTypeInspection
+     */
     public function canView(&$error = null)
     {
         $canView = parent::canView($error);

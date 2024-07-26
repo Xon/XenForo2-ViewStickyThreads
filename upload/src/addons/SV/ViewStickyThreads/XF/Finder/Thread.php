@@ -2,9 +2,12 @@
 
 namespace SV\ViewStickyThreads\XF\Finder;
 
+use XF\Entity\Forum as ForumEntity;
+
 class Thread extends XFCP_Thread
 {
-    public function applyVisibilityChecksInForum(\XF\Entity\Forum $forum, $allowOwnPending = false)
+    /** @noinspection PhpMissingReturnTypeInspection */
+    public function applyVisibilityChecksInForum(ForumEntity $forum, $allowOwnPending = false)
     {
         $finder = parent::applyVisibilityChecksInForum($forum, $allowOwnPending);
         $visitor = \XF::visitor();
@@ -55,7 +58,7 @@ array:3 [?
         // We edit the "`xf_thread`.`user_id` = 1" statement, or for guests rewrite 1=0 as this is what enforces the lack of viewOthers permission
         foreach($finder->conditions as $key => $condition)
         {
-            if ($isGuest && $condition === "1=0")
+            if ($isGuest && $condition === '1=0')
             {
                 $finder->conditions[$key] = "$stickyCol = 1";
             }
