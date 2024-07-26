@@ -6,7 +6,6 @@ class Thread extends XFCP_Thread
 {
     public function applyVisibilityChecksInForum(\XF\Entity\Forum $forum, $allowOwnPending = false)
     {
-        /** @var Thread $finder */
         $finder = parent::applyVisibilityChecksInForum($forum, $allowOwnPending);
         $visitor = \XF::visitor();
 
@@ -58,17 +57,17 @@ array:3 [?
         {
             if ($isGuest && $condition === "1=0")
             {
-                $finder->conditions[$key] = "{$stickyCol} = 1";
+                $finder->conditions[$key] = "$stickyCol = 1";
             }
             else if (strpos($condition, $userIdCol) !== false &&
                     strpos($condition, $moderatedCondition) === false)
             {
                 $parts = [];
-                $parts[] = "{$stickyCol} = 1";
+                $parts[] = "$stickyCol = 1";
 
                 if ($parts)
                 {
-                    $finder->conditions[$key] = "({$condition} OR ({$discussionStateCol} = 'visible' AND (". implode(' OR ', $parts) .')))';
+                    $finder->conditions[$key] = "($condition OR ($discussionStateCol = 'visible' AND (" . implode(' OR ', $parts) . ')))';
                 }
                 break;
             }
